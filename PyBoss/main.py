@@ -17,7 +17,10 @@ import os
 import csv
 
 csv_files = [os.path.join('raw_data', 'election_data_1.csv'), os.path.join('raw_data', 'election_data_2.csv')]
-print(csv_files)
+for file in csv_files:
+    with open(file, newline=' ') as f:
+        csvreader = csv.reader(f, delimiter =',')
+
 # def list_csv():
 # if __name__ == "__main__":
 #     list_csv()
