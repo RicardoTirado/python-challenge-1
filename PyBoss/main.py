@@ -18,6 +18,7 @@ import csv
 
 csv_files = [os.path.join('raw_data', 'election_data_1.csv'), os.path.join('raw_data', 'election_data_2.csv')]
 for file in csv_files:
+    print(file)
     with open(file, newline='') as cvsfile:
         csvreader = csv.reader(cvsfile, delimiter =',')
         print(csvreader)

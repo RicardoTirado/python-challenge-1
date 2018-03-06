@@ -22,9 +22,26 @@ for file in csv_files:
     print(file)
     with open(file, newline='') as csvfile:
         csvreader = csv.reader(csvfile, delimiter =',')
+        headers = next(csvreader, None)
+        candidate_votes = {}
+        rows = 0
         for row in csvreader:
-            print(row)
-# def list_csv():
-# if __name__ == "__main__":
-#     list_csv()
+            rows += 1
+            candidate_name = row[2]
+            # Increment the vote counts for this candidate, or add them to the dict with 1 vote
+            candidate_votes[candidate_name] = candidate_votes.get(candidate_name, 0) + 1
+
+    total_votes = sum(candidate_votes.values())
+    output = "Election Results\n-------------------------\nTotal Votes: " \
+            + str(total_votes) + "\n-------------------------\n"
+    # print(output)
+    str_list = []
+    for key in candidate_votes:
+        votes = candidate_votes[key]
+        output += key + ": " + str(int(votes/total_votes)) + " (" + str(votes) + ")\n"
+    print(candidate_votes)
+    print(total_votes)
+    output.join("-------------------------")
+    print(output)
+
 
