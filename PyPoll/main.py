@@ -32,16 +32,24 @@ for file in csv_files:
             candidate_votes[candidate_name] = candidate_votes.get(candidate_name, 0) + 1
 
     total_votes = sum(candidate_votes.values())
-    output = "Election Results\n-------------------------\nTotal Votes: " \
-            + str(total_votes) + "\n-------------------------\n"
-    # print(output)
-    str_list = []
-    for key in candidate_votes:
-        votes = candidate_votes[key]
-        output += key + ": " + str(int(votes/total_votes)) + " (" + str(votes) + ")\n"
-    print(candidate_votes)
-    print(total_votes)
-    output.join("-------------------------")
-    print(output)
+    results_list = []
+    results = ""
+    header = f"\nElection Results\n-------------------------\nTotal Votes: ({total_votes}) \n-------------------------\n"
 
+    # Calculate results
+    for candidate in candidate_votes:
+        votes = candidate_votes[candidate]
+        results_list.append(f"{candidate}: {(100 * (votes/total_votes)):.2f}% ({votes})")
+    results = "\n".join(results_list)
+    
+    # Find candidate with highest # of votes
+    winner_list = [candidate for candidate in candidate_votes if candidate_votes[candidate] == max(candidate_votes.values())]
+    winner = " and ".join(winner_list)
+    footer = f"\n-------------------------\nWinner: {winner}\n-------------------------"
+    final_text = header + results + footer
+    print(final_text)
+
+    # Write results into text file
+    with open(file[:-4] + '_results.txt', 'w') as txtfile:
+        txtfile.write(final_text)
 
