@@ -19,14 +19,80 @@ import csv
 
 csv_files = [os.path.join('raw_data', 'employee_data1.csv'), os.path.join('raw_data', 'employee_data1.csv')]
 
+us_state_abbrev = {
+    'Alabama': 'AL',
+    'Alaska': 'AK',
+    'Arizona': 'AZ',
+    'Arkansas': 'AR',
+    'California': 'CA',
+    'Colorado': 'CO',
+    'Connecticut': 'CT',
+    'Delaware': 'DE',
+    'Florida': 'FL',
+    'Georgia': 'GA',
+    'Hawaii': 'HI',
+    'Idaho': 'ID',
+    'Illinois': 'IL',
+    'Indiana': 'IN',
+    'Iowa': 'IA',
+    'Kansas': 'KS',
+    'Kentucky': 'KY',
+    'Louisiana': 'LA',
+    'Maine': 'ME',
+    'Maryland': 'MD',
+    'Massachusetts': 'MA',
+    'Michigan': 'MI',
+    'Minnesota': 'MN',
+    'Mississippi': 'MS',
+    'Missouri': 'MO',
+    'Montana': 'MT',
+    'Nebraska': 'NE',
+    'Nevada': 'NV',
+    'New Hampshire': 'NH',
+    'New Jersey': 'NJ',
+    'New Mexico': 'NM',
+    'New York': 'NY',
+    'North Carolina': 'NC',
+    'North Dakota': 'ND',
+    'Ohio': 'OH',
+    'Oklahoma': 'OK',
+    'Oregon': 'OR',
+    'Pennsylvania': 'PA',
+    'Rhode Island': 'RI',
+    'South Carolina': 'SC',
+    'South Dakota': 'SD',
+    'Tennessee': 'TN',
+    'Texas': 'TX',
+    'Utah': 'UT',
+    'Vermont': 'VT',
+    'Virginia': 'VA',
+    'Washington': 'WA',
+    'West Virginia': 'WV',
+    'Wisconsin': 'WI',
+    'Wyoming': 'WY',
+}
+
 for file in csv_files:
     with open(file, newline='') as csvfile:
         csvreader = csv.reader(csvfile, delimiter=',')
         header = next(csvreader)
+
+    with open(file[:-4] + "_new.csv", newline = '') as newcsvfile:
+        newcsvwriter = csv.writer(newcsvfile, delimiter=',')
+        newcsvwriter.writerow(["Emp ID","First Name","Last Name","DOB","SSN","State"])
         for row in csvreader:
+            # Original values
             EmpID = row[0]
             Name = row[1] 
             DOB = row[2] 
             SSN = row[3] 
             State = row[4] 
-            print(row)
+
+            # Convert values into required format
+            fName, lName = Name.split()
+            y, m, d = DOB.split("-")
+            new_SSN = "***-**-" + SSN[-4:]
+            new_State = us_state_abbrev[State]
+
+            print(f"{EmpID},{fName},{lName},{m}/{d}/{y},{new_SSN},{new_State}")
+            # Export values in dict into new CSV
