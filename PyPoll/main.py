@@ -24,9 +24,7 @@ for file in csv_files:
         csvreader = csv.reader(csvfile, delimiter =',')
         headers = next(csvreader, None)
         candidate_votes = {}
-        rows = 0
         for row in csvreader:
-            rows += 1
             candidate_name = row[2]
             # Increment the vote counts for this candidate, or add them to the dict with 1 vote
             candidate_votes[candidate_name] = candidate_votes.get(candidate_name, 0) + 1
