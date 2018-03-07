@@ -17,7 +17,7 @@ The required conversions are as follows:
 import os
 import csv
 
-csv_files = [os.path.join('raw_data', 'employee_data1.csv'), os.path.join('raw_data', 'employee_data1.csv')]
+csv_files = [os.path.join('raw_data', 'employee_data1.csv'), os.path.join('raw_data', 'employee_data2.csv')]
 
 us_state_abbrev = {
     'Alabama': 'AL',
@@ -77,9 +77,7 @@ for file in csv_files:
         csvreader = csv.reader(csvfile, delimiter=',')
         header = next(csvreader)
 
-    with open(file[:-4] + "_new.csv", newline = '') as newcsvfile:
-        newcsvwriter = csv.writer(newcsvfile, delimiter=',')
-        newcsvwriter.writerow(["Emp ID","First Name","Last Name","DOB","SSN","State"])
+        final_output = []
         for row in csvreader:
             # Original values
             EmpID = row[0]
@@ -93,6 +91,12 @@ for file in csv_files:
             y, m, d = DOB.split("-")
             new_SSN = "***-**-" + SSN[-4:]
             new_State = us_state_abbrev[State]
+            final_output.append([EmpID, fName, lName, m + "/" + d + "/" + y, new_SSN, new_State])
 
-            print(f"{EmpID},{fName},{lName},{m}/{d}/{y},{new_SSN},{new_State}")
-            # Export values in dict into new CSV
+    with open(file[:-4] + "_new.csv", 'w', newline = '') as newcsvfile:
+        newcsvwriter = csv.writer(newcsvfile, delimiter=',')
+        newcsvwriter.writerow(["Emp ID","First Name","Last Name","DOB","SSN","State"])
+        # Write values in final_output list into new CSV
+        for row in final_output:
+            newcsvwriter.writerow(row)
+            

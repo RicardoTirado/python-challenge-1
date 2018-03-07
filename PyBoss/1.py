@@ -64,3 +64,6 @@ us_state_abbrev = {
 State = "Wyoming"
 new_State = us_state_abbrev[State]
 print(new_State)
+s = [1,2,3]
+s.extend([4,5])
+print(s)
