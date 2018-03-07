@@ -22,5 +22,11 @@ csv_files = [os.path.join('raw_data', 'employee_data1.csv'), os.path.join('raw_d
 for file in csv_files:
     with open(file, newline='') as csvfile:
         csvreader = csv.reader(csvfile, delimiter=',')
+        header = next(csvreader)
         for row in csvreader:
+            EmpID = row[0]
+            Name = row[1] 
+            DOB = row[2] 
+            SSN = row[3] 
+            State = row[4] 
             print(row)
