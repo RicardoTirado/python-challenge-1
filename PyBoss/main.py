@@ -17,3 +17,10 @@ The required conversions are as follows:
 import os
 import csv
 
+csv_files = [os.path.join('raw_data', 'employee_data1.csv'), os.path.join('raw_data', 'employee_data1.csv')]
+
+for file in csv_files:
+    with open(file, newline='') as csvfile:
+        csvreader = csv.reader(csvfile, delimiter=',')
+        for row in csvreader:
+            print(row)
