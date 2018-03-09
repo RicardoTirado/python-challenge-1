@@ -18,21 +18,21 @@ import os
 import csv
 
 csv_files = [os.path.join('raw_data', 'election_data_1.csv'), os.path.join('raw_data', 'election_data_2.csv')]
+
 for file in csv_files:
-    print(file)
     with open(file, newline='') as csvfile:
         csvreader = csv.reader(csvfile, delimiter =',')
         headers = next(csvreader, None)
         candidate_votes = {}
         for row in csvreader:
             candidate_name = row[2]
-            # Increment the vote counts for this candidate, or add them to the dict with 1 vote
+            # Increment the vote counts for this candidate, or if new, then add them to the dict with 1 vote
             candidate_votes[candidate_name] = candidate_votes.get(candidate_name, 0) + 1
 
     total_votes = sum(candidate_votes.values())
     results_list = []
     results = ""
-    header = f"\nElection Results\n-------------------------\nTotal Votes: ({total_votes}) \n-------------------------\n"
+    header = f"For File: {file}\n\nElection Results\n-------------------------\nTotal Votes: ({total_votes})\n-------------------------\n"
 
     # Calculate results
     for candidate in candidate_votes:
@@ -41,6 +41,7 @@ for file in csv_files:
     results = "\n".join(results_list)
     
     # Find candidate with highest # of votes
+    # Use a list in case of tie
     winner_list = [candidate for candidate in candidate_votes if candidate_votes[candidate] == max(candidate_votes.values())]
     winner = " and ".join(winner_list)
     footer = f"\n-------------------------\nWinner: {winner}\n-------------------------"
@@ -50,4 +51,3 @@ for file in csv_files:
     # Write results into text file
     with open(file[:-4] + '_results.txt', 'w') as txtfile:
         txtfile.write(final_text)
-
