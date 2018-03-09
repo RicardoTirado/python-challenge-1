@@ -14,7 +14,6 @@ Your task is to create a Python script to automate the analysis of any such pass
 import os
 import re
 
-
 source_dir = 'raw_data'
 file_list  = os.listdir(source_dir)
 file_location = []
@@ -24,26 +23,28 @@ for file in file_list:
     file_location.append(os.path.join(source_dir, file))
 
 for file in file_location:
-
     word_count = 0
     letter_count = 0
     
     with open(file, 'r') as txt:
+        # Read complete text in
         full_txt = txt.read()
         # Split paragraph
         sentences = re.split(r'[.!?;]\s*', full_txt)
         sentence_count = len(sentences)
 
-        # Count number of words        
+        # Count number of words in each sentence        
         for sentence in sentences:
+            sentence.strip()
             words = sentence.split()
 
             for word in words:
-                # Count number of words
+                # Add to total word count
                 word_count += 1
                 # Count number of letters in each word
                 letter_count += len(word)
 
         print(f"\nParagraph Analysis for File '{file}'\n-----------------\nApproximate Word Count: {word_count}")  
-        print(f"Approximate Sentence Count: {sentence_count}\nAverage Letter Count: {letter_count / word_count}") 
-        print(f"Approximate Sentence Length: {word_count / sentence_count}")
+        # Truncate float to 4 decimal points
+        print(f"Approximate Sentence Count: {sentence_count}\nAverage Letter Count: {(letter_count / word_count):.4f}") 
+        print(f"Approximate Sentence Length: {(word_count / sentence_count):.4f}\n")
