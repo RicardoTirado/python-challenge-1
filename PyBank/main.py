@@ -20,7 +20,7 @@ import csv
 def list_csv():
     """ Create a list of CSV files in the current directory"""
     for file in (glob.glob('*.csv')): 
-        with open(file, 'r') as f:
+        with open(file, 'r', newline='') as f:
             content = csv.reader(f, delimiter=',')
             # Skip the header row
             next(content)
@@ -45,20 +45,20 @@ def list_csv():
                     greatest_revenue_decrease_month = month
                 
                 elif revenue > greatest_revenue_increase:
-                        greatest_revenue_increase = revenue
-                        greatest_revenue_increase_month = month
+                    greatest_revenue_increase = revenue
+                    greatest_revenue_increase_month = month
 
-            final_output = "Source Data File: " + file +"\n\n" \
-                        + "Financial Analysis\n----------------------------\n" \
-                        + "Total Months: """ +  str(total_months) + "\n" \
-                        + "Average Revenue Change: " + str(int(total_revenue / total_months)) + "\n" \
-                        + "Greatest Increase in Revenue: " + greatest_revenue_increase_month + " (" + str(greatest_revenue_increase) + ")" + "\n"\
-                        + "Greatest Decrease in Revenue: " + greatest_revenue_decrease_month + " (" + str(greatest_revenue_decrease) + ")\n\n"
+        final_output = "Source Data File: " + file + "\n\n" \
+                    + "Financial Analysis\n----------------------------\n" \
+                    + "Total Months: " +  str(total_months) + "\n" \
+                    + "Average Revenue Change: " + str(int(total_revenue / total_months)) + "\n" \
+                    + "Greatest Increase in Revenue: " + greatest_revenue_increase_month + " (" + str(greatest_revenue_increase) + ")" + "\n"\
+                    + "Greatest Decrease in Revenue: " + greatest_revenue_decrease_month + " (" + str(greatest_revenue_decrease) + ")\n\n"
 
-
-            print(final_output)
-            with open(file[:-4]+".txt", 'w+') as f:
-                f.write(final_output)
+        print(final_output)
+        # Write out text file
+        with open(file[:-4]+".txt", 'w+') as f:
+            f.write(final_output)
 
 if __name__ == "__main__":
     list_csv()
