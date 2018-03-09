@@ -86,17 +86,19 @@ for file in csv_files:
             SSN = row[3] 
             State = row[4] 
 
-            # Convert values into required format
+            # Convert values into new required format
             fName, lName = Name.split()
             y, m, d = DOB.split("-")
+            # Only last 4 digits revealed
             new_SSN = "***-**-" + SSN[-4:]
             new_State = us_state_abbrev[State]
             final_output.append([EmpID, fName, lName, m + "/" + d + "/" + y, new_SSN, new_State])
 
+    # Write values in final_output list into new CSV
     with open(file[:-4] + "_new.csv", 'w', newline = '') as newcsvfile:
         newcsvwriter = csv.writer(newcsvfile, delimiter=',')
         newcsvwriter.writerow(["Emp ID","First Name","Last Name","DOB","SSN","State"])
-        # Write values in final_output list into new CSV
+
         for row in final_output:
             newcsvwriter.writerow(row)
             
